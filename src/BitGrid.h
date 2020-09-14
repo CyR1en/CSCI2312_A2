@@ -47,6 +47,12 @@ public:
     // width accessor.
     int getWidth() const;
 
+    // length mutator.
+    void setLength(int length);
+
+    // width mutator.
+    void setWidth(int width);
+
     // toString for this class.
     std::string toString() const;
 };

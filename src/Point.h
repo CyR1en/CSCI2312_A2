@@ -20,6 +20,10 @@ public:
     // Immutable accessor.
     double getY() const;
 
+    void setX(double x);
+
+    void setY(double y);
+
     // toString.
     std::string toString() const;
 };

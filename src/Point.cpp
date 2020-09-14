@@ -34,3 +34,21 @@ string Point::toString() const {
     ss << "(" << getX() << ", " << getY() << ")";
     return ss.str();
 }
+
+/**
+ * Mutator for the x coordinate of this point.
+ *
+ * @param x new x coordinate.
+ */
+void Point::setX(double x) {
+    x_ = x;
+}
+
+/**
+ * Mutator for the y coordinate of this point.
+ *
+ * @param y new y coordinate.
+ */
+void Point::setY(double y) {
+    y_ = y;
+}
