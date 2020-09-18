@@ -101,6 +101,10 @@ BitGrid BitGrid::operator&(const BitGrid &grid2) {
 
     if (!longer->empty())
         out.insert(out.end(), longer->begin(), longer->end());
+
+    // Change size of bit after operation.
+    out.setLength(longer->getLength());
+    out.setWidth(longer->getWidth());
     return out;
 }
 

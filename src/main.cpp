@@ -1,11 +1,11 @@
 #include <iostream>
 #include "BitGrid.h"
-#include "Bitset.h"
+
 using namespace std;
 
 int main() {
-    BitGrid grid = BitGrid(2, 16);
-    BitGrid grid2 = BitGrid(2, 16);
+    BitGrid grid = BitGrid(16, 32);
+    BitGrid grid2 = BitGrid(16, 32);
 
     cout << "Grid1 filled 1/3rd with ones:" << endl;
     grid.fillThird();
@@ -16,7 +16,8 @@ int main() {
     cout << grid2.toString() << endl;
 
     cout << "Result after Grid1 and Grid2 comparison" << endl;
-    cout << (grid & grid2).toString();
+    BitGrid grid3 = grid & grid2;
+    cout << grid3.toString();
 
     return 0;
 }
