@@ -4,8 +4,8 @@
 using namespace std;
 
 int main() {
-    BitGrid grid = BitGrid(16, 32);
-    BitGrid grid2 = BitGrid(16, 32);
+    BitGrid grid = BitGrid(2, 2);
+    BitGrid grid2 = BitGrid(3, 2);
 
     cout << "Grid1 filled 1/3rd with ones:" << endl;
     grid.fillThird();

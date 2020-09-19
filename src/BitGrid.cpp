@@ -32,7 +32,7 @@ int get_random(int a, int b) {
  * @param _length length (or height) of the grid.
  * @param _width width of the grid.
  */
-BitGrid::BitGrid(int _length, int _width) : std::deque<Bitset>(_length, Bitset(_width, false)),
+BitGrid::BitGrid(int _length, int _width) : std::vector<Bitset>(_length, Bitset(_width, false)),
                                             length(_length), width(_width) {}
 
 /**
@@ -78,9 +78,9 @@ void BitGrid::fillThird() {
  *      | 0 0 |  &  | 1 0 |  ->  | 0 0 |   &   | 0 0 |
  *                  | 1 1 |      | 0 0 |       | 1 1 |
  *
- * Since this is an AND operator, we can just ignore the extra "rows" or Bitsets that's being
- * compared to the padding and just insert the paddings after the operation. However, on a different
- * operator, the padding must not be ignored.
+ * Since this is an AND operator, we can just ignore the extra "rows" or Bitsets that's being compared to
+ * the padding and just leave the extra bitsets as the default value (Bitsets of zeros). However, on a
+ * different operator, the padding must not be ignored.
  *
  * i.e: | 0 1 |     | 0 1 |      | 0 1 |       | 0 1 |     | 0 1 |
  *      | 0 0 |  &  | 1 0 |  ->  | 0 0 |   &   | 0 0 |  =  | 0 0 |
@@ -89,29 +89,26 @@ void BitGrid::fillThird() {
  * The actual & operation is done among the "rows" or Bitset itself, and the result will just be inserted
  * to the output BitGrid.
  *
+ * Case if two grids have a diff length and width:
+ * | 0 1 |     | 0 0 1 |    | 0 0 1 |   | 0 0 1 |   | 0 0 1 |
+ * | 1 0 |  &  | 0 1 0 | -> | 0 1 0 | & | 0 1 0 | = | 0 1 0 |
+ *             | 1 0 1 |    | 0 0 0 |   | 1 0 1 |   | 0 0 0 |
+ *
  * @param grid2 The grid that were going to be operating with.
  * @return A BitGrid with the result of the operation.
  */
 BitGrid BitGrid::operator&(const BitGrid &grid2) {
     BitGrid g2_local = grid2;
 
-    // used pointers because "this" is a pointer and it's easier to deal with.
+    // Used pointers because "this" is a pointer and it's easier to deal with.
     BitGrid *longer = size() > grid2.size() ? this : &g2_local;
     BitGrid *shorter = longer == this ? &g2_local : this;
 
-    BitGrid out(shorter->getLength(), shorter->getWidth());
-    for (int i = 0; i < shorter->size(); i++) {
-        out[i] = longer->front() & shorter->at(i);
-        longer->pop_front();
-    }
-
-    BitGrid padding(longer->getLength() - shorter->getWidth(),
-                    longer->getWidth() - shorter->getWidth());
-    out.insert(out.end(), padding->begin(), padding->end());
-
-    // Change size of bit after operation.
-    out.setLength(longer->getLength());
-    out.setWidth(longer->getWidth());
+    // Make an empty BitGrid with the size of the bigger BitGrid
+    BitGrid out(longer->getLength(), longer->getWidth());
+    // Then set elements to the result of the & operator between two Bitsets.
+    for (int i = 0; i < shorter->size(); i++)
+        out[i] = longer->at(i) & shorter->at(i);
     return out;
 }
 

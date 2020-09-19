@@ -23,7 +23,7 @@ int get_random(int a, int b);
  *
  * @see Bitset
  */
-class BitGrid : std::deque<Bitset> {
+class BitGrid : std::vector<Bitset> {
 private:
     int length;
     int width;
