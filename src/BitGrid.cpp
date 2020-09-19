@@ -87,7 +87,7 @@ void BitGrid::fillThird() {
  *                  | 1 1 |      | 0 0 |       | 1 1 |     | 0 0 |
  *
  * The actual & operation is done among the "rows" or Bitset itself, and the result will just be inserted
- * to the output BitGrid.
+ * to the corresponding index on the output BitGrid.
  *
  * Case if two grids have a diff length and width:
  * | 0 1 |     | 0 0 1 |    | 0 0 1 |   | 0 0 1 |   | 0 0 1 |

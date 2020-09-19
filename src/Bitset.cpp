@@ -27,7 +27,12 @@ Bitset::Bitset(unsigned long size, bool val) : std::vector<bool>(size, val) {}
  * - Binary number starts from right to left.
  * - Shorter binary gets padded to have the same size as the bigger binary number.
  *
- * i.e:  1001 0011 & 1010 -> 0000 0010
+ * i.e:  1001 0011 & 1010 -> 1001 0011 & 0000 0010
+ *
+ * Since this is an AND operator, we can just ignore the extra bits that's being
+ * operated with the padding.
+ *
+ * i.e: 1001 0011 & 1010 -> 1001 0011 & 0000 0010 = 0000 0010
  *
  * @param bs2 the other Bitset that this functions is going to do the operation with.
  * @return result of the AND operator between two Bitset.

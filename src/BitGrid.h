@@ -12,10 +12,10 @@ int get_random(int a, int b);
 /**
  * Implementation of a BitGrid for Programming Assignment 2.
  *
- * This is an extension of a deque of a Bitset implementation that I made.
+ * This is an extension of a vector of a Bitset implementation that I made.
  * See documentation for Bitset to understand why I tackled the assignment this way.
  *
- * I made this class to extend a deque of Bitset because I want to inherit all of the
+ * I made this class to extend a vector of Bitset because I want to inherit all of the
  * methods that are available in the class. All I needed to do was to implement the
  * required functions to complete the assignment. I also approached the comparison
  * by overriding the AND bit operator for this class (since the definition on canvas
