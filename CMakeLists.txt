@@ -5,11 +5,4 @@ set(CMAKE_CXX_STANDARD 14)
 
 include_directories(src)
 
-add_executable(CSCI2312_A2
-    src/BitGrid.cpp
-    src/BitGrid.h
-    src/Bitset.cpp
-    src/Bitset.h
-    src/main.cpp
-    src/Point.cpp
-    src/Point.h)
+add_executable(Grids src/main.cpp src/BitGrid.cpp src/BitGrid.h src/Point.cpp src/Point.h src/Bitset.cpp src/Bitset.h)
