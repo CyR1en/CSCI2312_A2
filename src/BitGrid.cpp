@@ -70,18 +70,24 @@ void BitGrid::fillThird() {
 /**
  * & operator overload for BitGrid.
  *
- * Unlike the Bitset, a BitGrid doesn't behave like a binary number. So when doing an & operator between
- * two grids, the extra "row" or Bitset doesn't get compared with a padding (which will be a Bitset of
- * zeros if that's the case.) Instead, the extra "row" or Bitset will just get carried over to the new
- * BitGrid.
+ * To retain the definition of a binary operator, this function was implemented with its properties being
+ * followed. So when doing an & operator between wo grids, the extra "row" or Bitset gets compared with
+ * a padding (which will be a Bitset of zeros).
  *
- * i.e: | 0 1 |     | 0 1 |              | 0 1 |
- *      | 0 0 |  &  | 1 0 |      ->      | 0 0 |
- *                  | 1 1 |  carry over  | 1 1 |
+ * i.e: | 0 1 |     | 0 1 |      | 0 1 |       | 0 1 |
+ *      | 0 0 |  &  | 1 0 |  ->  | 0 0 |   &   | 0 0 |
+ *                  | 1 1 |      | 0 0 |       | 1 1 |
  *
- * The reason why this class is an extension of a deque is because I want to pop the front of the bigger
- * grid and compare it with the corresponding index from the smaller grid. The remaining elements of the
- * bigger grid will then be inserted to the output grid as a carry over.
+ * Since this is an AND operator, we can just ignore the extra "rows" or Bitsets that's being
+ * compared to the padding and just insert the paddings after the operation. However, on a different
+ * operator, the padding must not be ignored.
+ *
+ * i.e: | 0 1 |     | 0 1 |      | 0 1 |       | 0 1 |     | 0 1 |
+ *      | 0 0 |  &  | 1 0 |  ->  | 0 0 |   &   | 0 0 |  =  | 0 0 |
+ *                  | 1 1 |      | 0 0 |       | 1 1 |     | 0 0 |
+ *
+ * The actual & operation is done among the "rows" or Bitset itself, and the result will just be inserted
+ * to the output BitGrid.
  *
  * @param grid2 The grid that were going to be operating with.
  * @return A BitGrid with the result of the operation.
@@ -99,8 +105,9 @@ BitGrid BitGrid::operator&(const BitGrid &grid2) {
         longer->pop_front();
     }
 
-    if (!longer->empty())
-        out.insert(out.end(), longer->begin(), longer->end());
+    BitGrid padding(longer->getLength() - shorter->getWidth(),
+                    longer->getWidth() - shorter->getWidth());
+    out.insert(out.end(), padding->begin(), padding->end());
 
     // Change size of bit after operation.
     out.setLength(longer->getLength());
