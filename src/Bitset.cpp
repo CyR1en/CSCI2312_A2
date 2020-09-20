@@ -38,20 +38,19 @@ Bitset::Bitset(unsigned long size, bool val) : std::vector<bool>(size, val) {}
  * @return result of the AND operator between two Bitset.
  */
 Bitset Bitset::operator&(const Bitset &bs2) {
-    unsigned long bs2_size = bs2.size();
-    unsigned long this_size = size();
+    Bitset b2_local = bs2;
 
-    Bitset out(bs2_size > this_size ? this_size : bs2_size, false);
-    unsigned long out_size = out.size();
+    Bitset *longer = size() > bs2.size() ? this : &b2_local;
+    Bitset *shorter = longer == this ? &b2_local : this;
 
-    for (int i = 0; i < out.size(); i++)
-        //offset to start from the last.
-        if (at((this_size - 1) - i) && bs2.at((bs2_size - 1) - i))
-            out[(out_size - 1) - i] = true;
+    auto longer_size = longer->size() - 1;
+    auto shorter_size = shorter->size() - 1;
 
-    if (this_size != bs2_size)
-        out.insert(out.begin(), bs2_size > this_size ? bs2.begin() : begin(),
-                   bs2_size > this_size ? bs2.end() - out_size : end() - out_size);
+    // Make an empty Bitset with the size of the bigger Bitset
+    Bitset out(longer->size(), false);
+    // Then set elements to the result of the & operator between two bits
+    for (int i = 0; i < shorter->size(); i++)
+        out[(out.size() - 1 ) - i] = longer->at(longer_size - i) && shorter->at(shorter_size - i);
 
     return out;
 }
