@@ -104,8 +104,13 @@ BitGrid BitGrid::operator&(const BitGrid &grid2) {
     BitGrid *longer = size() > grid2.size() ? this : &g2_local;
     BitGrid *shorter = longer == this ? &g2_local : this;
 
+    // Stuff to figure out what the width of the grid should be.
+    auto longer_width = longer->getWidth();
+    auto shorter_width = shorter->getWidth();
+    auto out_width = longer_width > shorter_width ? longer_width : shorter_width;
+
     // Make an empty BitGrid with the size of the bigger BitGrid
-    BitGrid out(longer->getLength(), longer->getWidth());
+    BitGrid out(longer->getLength(), out_width);
     // Then set elements to the result of the & operator between two Bitsets.
     for (int i = 0; i < shorter->size(); i++)
         out[i] = longer->at(i) & shorter->at(i);
@@ -161,7 +166,7 @@ string BitGrid::toString() const {
     for (int i = 0; i < size(); i++) {
         ss << "| ";
         ss << at(i).toString(" ");
-        auto end = i == length ? " |" : " |\n";
+        auto end = i == getLength() ? " |" : " |\n";
         ss << end;
     }
     return ss.str();
