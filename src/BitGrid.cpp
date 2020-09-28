@@ -70,7 +70,7 @@ void BitGrid::fillThird() {
  * & operator overload for BitGrid.
  *
  * To retain the definition of a binary operator, this function was implemented with its properties being
- * followed. So when doing an & operator between wo grids, the extra "row" or Bitset gets compared with
+ * followed. So when doing an & operator between two grids, the extra "row" or Bitset gets compared with
  * a padding (which will be a Bitset of zeros).
  *
  * i.e: | 0 1 |     | 0 1 |      | 0 1 |       | 0 1 |
