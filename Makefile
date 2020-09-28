@@ -1,65 +1,41 @@
-# tool marcros
-CC := g++
-CCFLAG :=
-DBGFLAG := -g
-CCOBJFLAG := $(CCFLAG) -c
+CXX      := g++
+CXXFLAGS := -Wno-c++11-extensions
+BUILD    := ./build
+OBJ_DIR  := $(BUILD)/objects
+APP_DIR  := $(BUILD)/apps
+TARGET   :=	Grids
+INCLUDE  := -Iinclude/
+SRC      :=                      \
+   $(wildcard src/module1/*.cpp) \
+   $(wildcard src/module2/*.cpp) \
+   $(wildcard src/module3/*.cpp) \
+   $(wildcard src/*.cpp)         \
 
-# path marcros
-BIN_PATH := bin
-OBJ_PATH := obj
-SRC_PATH := src
-DBG_PATH := debug
+OBJECTS  := $(SRC:%.cpp=$(OBJ_DIR)/%.o)
 
-# compile marcros
-TARGET_NAME := main
-ifeq ($(OS),Windows_NT)
-	TARGET_NAME := $(addsuffix .exe,$(TARGET_NAME))
-endif
-TARGET := $(BIN_PATH)/$(TARGET_NAME)
-TARGET_DEBUG := $(DBG_PATH)/$(TARGET_NAME)
-MAIN_SRC := src/main.cpp
+all: build $(APP_DIR)/$(TARGET)
 
-# src files & obj files
-SRC := $(foreach x, $(SRC_PATH), $(wildcard $(addprefix $(x)/*,.c*)))
-OBJ := $(addprefix $(OBJ_PATH)/, $(addsuffix .o, $(notdir $(basename $(SRC)))))
-OBJ_DEBUG := $(addprefix $(DBG_PATH)/, $(addsuffix .o, $(notdir $(basename $(SRC)))))
+$(OBJ_DIR)/%.o: %.cpp
+	@mkdir -p $(@D)
+	$(CXX) $(CXXFLAGS) $(INCLUDE) -c $< -o $@
 
-# clean files list
-DISTCLEAN_LIST := $(OBJ) \
-                  $(OBJ_DEBUG)
-CLEAN_LIST := $(TARGET) \
-			  $(TARGET_DEBUG) \
-			  $(DISTCLEAN_LIST)
+$(APP_DIR)/$(TARGET): $(OBJECTS)
+	@mkdir -p $(@D)
+	$(CXX) $(CXXFLAGS) -o $(APP_DIR)/$(TARGET) $^
 
-# default rule
-default: all
+.PHONY: all build clean debug release
 
-# non-phony targets
-$(TARGET): $(OBJ)
-	$(CC) $(CCFLAG) -o $@ $?
+build:
+	@mkdir -p $(APP_DIR)
+	@mkdir -p $(OBJ_DIR)
 
-$(OBJ_PATH)/%.o: $(SRC_PATH)/%.c*
-	$(CC) $(CCOBJFLAG) -o $@ $<
+debug: CXXFLAGS += -DDEBUG -g
+debug: all
 
-$(DBG_PATH)/%.o: $(SRC_PATH)/%.c*
-	$(CC) $(CCOBJFLAG) $(DBGFLAG) -o $@ $<
+release: CXXFLAGS += -O2
+release: all
 
-$(TARGET_DEBUG): $(OBJ_DEBUG)
-	$(CC) $(CCFLAG) $(DBGFLAG) $? -o $@
-
-# phony rules
-.PHONY: all
-all: $(TARGET)
-
-.PHONY: debug
-debug: $(TARGET_DEBUG)
-
-.PHONY: clean
 clean:
-	@echo CLEAN $(CLEAN_LIST)
-	@rm -f $(CLEAN_LIST)
-
-.PHONY: distclean
-distclean:
-	@echo CLEAN $(CLEAN_LIST)
-	@rm -f $(DISTCLEAN_LIST)
+	-@rm -rvf $(OBJ_DIR)/*
+	-@rm -rvf $(APP_DIR)/*
+                       
