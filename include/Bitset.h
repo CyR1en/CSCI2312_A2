@@ -17,7 +17,11 @@
  * be the "row" for the Grid, I can just simply do an AND operand for each row and set the result of
  * the operation to be the i'th row on the output Grid.
  */
-class Bitset: public std::vector<bool> {
+class Bitset : public std::vector<bool> {
+private:
+    // Variable for printing.
+    const char *delimiter;
+
 public:
     Bitset();
 
@@ -26,11 +30,17 @@ public:
     // Override & bitwise operator.
     Bitset operator&(const Bitset &bs2);
 
-    // Print normally keeping normal size.
-    std::string toString(const char *delimiter) const;
+    // Delimiter accessor.
+    std::string getDelimiter() const;
 
-    // Print this bitset with a specific size.
-    std::string toString(int print_size, const char *delimiter) const;
+    // Delimiter mutator.
+    void setDelimiter(const char *_delimiter);
+
+    // Get the same Bitset but with a different _delimiter.
+    Bitset withDelimiterOf(const char *_delimiter) const;
+
+    // Overload stream insertion operator for printing.
+    friend std::ostream &operator<<(std::ostream &out, const Bitset &b);
 };
 
 

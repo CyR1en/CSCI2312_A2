@@ -1,6 +1,5 @@
 #include <iostream>
 #include <random>
-#include <sstream>
 #include "BitGrid.h"
 
 using namespace std;
@@ -154,22 +153,20 @@ int BitGrid::getWidth() const {
 }
 
 /**
- * String representation of the grid.
+ * ostream insertion operator overload for easy printing.
  *
- * The fact that I passed the responsibility of printing the "row" or Bitset to the
- * Bitset class itself the printing of this class easier.
- *
- * @return a string representation of this Grid.
+ * @param out the output stream
+ * @param b the BitGrid to insert
+ * @return ostream with the BitGrid inserted.
  */
-string BitGrid::toString() const {
-    stringstream ss;
-    for (int i = 0; i < size(); i++) {
-        ss << "| ";
-        ss << at(i).toString(" ");
-        auto end = i == getLength() ? " |" : " |\n";
-        ss << end;
+ostream &operator<<(ostream &out, const BitGrid &g) {
+    for (int i = 0; i < g.size(); i++) {
+        out << "| ";
+        out << g.at(i).withDelimiterOf(" ");
+        auto end = i == g.getLength() ? " |" : " |\n";
+        out << end;
     }
-    return ss.str();
+    return out;
 }
 
 

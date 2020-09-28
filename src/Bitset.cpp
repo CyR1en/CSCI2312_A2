@@ -50,45 +50,62 @@ Bitset Bitset::operator&(const Bitset &bs2) {
     Bitset out(longer->size(), false);
     // Then set elements to the result of the & operator between two bits
     for (int i = 0; i < shorter->size(); i++)
-        out[(out.size() - 1 ) - i] = longer->at(longer_size - i) && shorter->at(shorter_size - i);
+        out[(out.size() - 1) - i] = longer->at(longer_size - i) && shorter->at(shorter_size - i);
 
     return out;
 }
 
 /**
- * Adapted string representation of this class.
+ * Returns this current Bitset with a different delimiter.
  *
- * This class takes another param called print_size so it can be printed with a specific bit size.
- * It just pads zeros in-front of the bitset.
+ * I made this so that we could have a one liner when printing.
+ * i.e: cout << bitset.withDelimiterOf(" ");
  *
- * i.e: 0010 -> toString(8) -> 0000 0010.
+ * This would not change the actual delimiter but instead makes a copy
+ * and set that copy's delimiter.
  *
- * @param print_size the print size of this bitset.
- * @param delimiter a separator between each bits.
- * @return Adapted representation of this BitGrid.
+ * @param _delimiter New delimiter.
+ * @return
  */
-string Bitset::toString(int print_size, const char *delimiter = "") const {
-    stringstream ss;
-    int start = ((int) size()) - print_size;
-    for (int i = start; i < (int) size(); i++)
-        ss << (i >= 0 && at(i)) << (i == size() - 1 ? "" : delimiter);
-    return ss.str();
+Bitset Bitset::withDelimiterOf(const char *_delimiter) const {
+    Bitset copy = *this;
+    copy.setDelimiter(_delimiter);
+    return copy;
 }
 
 /**
- * String representation of this bitset with size retention.
+ * ostream insertion operator overload for easy printing.
  *
- * This takes in a delimiter param just so that I can print each bitset clearly with a space ( for
- * better printing when it comes to grids.)
- *
- * i.e: 0001 -> toString(" ") -> 0 0 0 1.
- *
- * @param delimiter
- * @return string representation of this BitGrid.
+ * @param out the output stream
+ * @param b the Bitset to insert
+ * @return ostream with the Bitset inserted.
  */
-string Bitset::toString(const char *delimiter = "") const {
-    return toString(size(), delimiter);
+ostream &operator<<(ostream &out, const Bitset &b) {
+    for (int i = 0; i < (int) b.size(); i++)
+        out << (i >= 0 && b.at(i)) << (i == b.size() - 1 ? "" : b.getDelimiter());
+    return out;
 }
+
+/**
+ * Delimiter accessor.
+ *
+ * @return delimiter.
+ */
+string Bitset::getDelimiter() const {
+    return delimiter;
+}
+
+/**
+ * Delimiter mutator.
+ *
+ * @param _delimiter new delimiter.
+ */
+void Bitset::setDelimiter(const char *_delimiter) {
+    delimiter = _delimiter;
+}
+
+
+
 
 
 

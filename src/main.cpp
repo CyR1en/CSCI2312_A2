@@ -4,20 +4,20 @@
 using namespace std;
 
 int main() {
-    BitGrid grid = BitGrid(2, 2);
-    BitGrid grid2 = BitGrid(3, 2);
+    BitGrid grid = BitGrid(3, 4);
+    BitGrid grid2 = BitGrid(3, 4);
 
     cout << "Grid1 filled 1/3rd with ones:" << endl;
     grid.fillThird();
-    cout << grid.toString() << endl;
+    cout << grid << endl;
 
     cout << "Grid2 filled 1/3 with ones:" << endl;
     grid2.fillThird();
-    cout << grid2.toString() << endl;
+    cout << grid2 << endl;
 
     cout << "Result after Grid1 and Grid2 comparison" << endl;
-    BitGrid grid3 = grid & grid2;
-    cout << grid3.toString();
+    cout << (grid & grid2);
+
 
     return 0;
 }

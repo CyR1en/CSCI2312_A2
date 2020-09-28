@@ -53,8 +53,8 @@ public:
     // width mutator.
     void setWidth(int width);
 
-    // toString for this class.
-    std::string toString() const;
+    // Overload stream insertion operator for printing.
+    friend std::ostream &operator<<(std::ostream &out, const BitGrid &g);
 };
 
 #endif
