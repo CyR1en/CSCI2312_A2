@@ -8,7 +8,7 @@ using namespace std;
  *
  * This just calls the constructor from the vector class.
  */
-Bitset::Bitset() : std::vector<bool>() {}
+Bitset::Bitset() : delimiter(""), std::vector<bool>() {}
 
 /**
  * Two  argument constructor for the Bitset class.
@@ -18,7 +18,7 @@ Bitset::Bitset() : std::vector<bool>() {}
  * @param size initial size of the vector.
  * @param val default value of each element in the vector.
  */
-Bitset::Bitset(unsigned long size, bool val) : std::vector<bool>(size, val) {}
+Bitset::Bitset(unsigned long size, bool val) : delimiter(""), std::vector<bool>(size, val) {}
 
 /**
  * & operator overload for the Bitset class.
