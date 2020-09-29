@@ -2,6 +2,7 @@
 #define GRIDS_BITSET_H
 
 #include <vector>
+#include <iostream>
 
 /**
  * Implementation of a Bitset.
@@ -31,7 +32,7 @@ public:
     Bitset operator&(const Bitset &bs2);
 
     // Delimiter accessor.
-    std::string getDelimiter() const;
+    const char *getDelimiter() const;
 
     // Delimiter mutator.
     void setDelimiter(const char *_delimiter);

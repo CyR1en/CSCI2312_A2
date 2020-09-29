@@ -1,10 +1,10 @@
 #ifndef GRIDS_BITGRID_H
 #define GRIDS_BITGRID_H
 
-#import <deque>
+#include <vector>
 
-#import "Point.h"
-#import "Bitset.h"
+#include "Point.h"
+#include "Bitset.h"
 
 // Helper method to help me get a more "random" number.
 int get_random(int a, int b);

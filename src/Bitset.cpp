@@ -91,7 +91,7 @@ ostream &operator<<(ostream &out, const Bitset &b) {
  *
  * @return delimiter.
  */
-string Bitset::getDelimiter() const {
+const char *Bitset::getDelimiter() const {
     return delimiter;
 }
 

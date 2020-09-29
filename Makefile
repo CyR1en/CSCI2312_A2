@@ -1,5 +1,5 @@
 CXX      := g++
-CXXFLAGS := -Wno-c++11-extensions
+CXXFLAGS := g++ -g -std=c++11
 BUILD    := ./build
 OBJ_DIR  := $(BUILD)/objects
 APP_DIR  := $(BUILD)/apps
