@@ -27,3 +27,9 @@ To compile the project
 ```
 make clean all
 ```
+Compiled objs can be found in ```/build/objects``` and the executable binary can be found in `/build/apps`.
+
+To run after compilation
+```
+./build/apps/Grids
+```
